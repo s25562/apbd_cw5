@@ -1,24 +1,24 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Models;
 
-[PrimaryKey(nameof(MedicamentId), nameof(PrescriptionId))]
-[Table("PrescriptionMedicaments")]
 public class PrescriptionMedicament
 {
-    [ForeignKey(nameof(Medicament))]
-    public int MedicamentId { get; set; }
-    
-    [ForeignKey(nameof(Prescription))]
-    public int PrescriptionId { get; set; }
-    
-    public int? Dose { get; set; }
-    
+    [Key, Column(Order = 0)]
+    public int IdMedicament { get; set; }
+        
+    [Key, Column(Order = 1)]
+    public int IdPrescription { get; set; }
+        
+    public int Dose { get; set; }
+        
     [MaxLength(100)]
     public string Details { get; set; }
-    
-    public Medicament Medicament { get; set; }
-    public Prescription Prescription { get; set; }
+        
+    [ForeignKey("IdMedicament")]
+    public virtual Medicament Medicament { get; set; }
+        
+    [ForeignKey("IdPrescription")]
+    public virtual Prescription Prescription { get; set; }
 }

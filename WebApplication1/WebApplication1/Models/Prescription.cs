@@ -3,21 +3,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models;
 
-[Table("Prescription")]
 public class Prescription
 {
     [Key]
     public int IdPrescription { get; set; }
+        
+    // Data wystawienia recepty
+    [Required]
     public DateTime Date { get; set; }
+        
+    // Data ważności recepty
+    [Required]
     public DateTime DueDate { get; set; }
-    [ForeignKey(nameof(IdPatient))]
+        
     public int IdPatient { get; set; }
-    
-    [ForeignKey(nameof(IdDoctor))]
+        
     public int IdDoctor { get; set; }
-    
-    public Doctor Doctor { get; set; }
-    public Patient Patient { get; set; }
-    
-    public ICollection<PrescriptionMedicament> PrescriptionMedicaments { get; set; }
+        
+    [ForeignKey("IdPatient")]
+    public virtual Patient Patient { get; set; }
+        
+    [ForeignKey("IdDoctor")]
+    public virtual Doctor Doctor { get; set; }
+        
+    public virtual ICollection<PrescriptionMedicament> PrescriptionMedicaments { get; set; } = new List<PrescriptionMedicament>();
 }
